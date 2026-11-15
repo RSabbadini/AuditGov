@@ -1,0 +1,6 @@
+2026-11-15 11:09:47 -0300
+RESULTADO: OK  3 registro(s) verificado(s).
+           ultimo seq : 3
+           ultimo hash: 4a94b8d36675a37683bbaa6820bc5127d15657949054bffb7bccc39107107893
+           Guarde (seq, hash) fora do banco: so uma ancora externa detecta a remocao das ultimas linhas.
+exit=0

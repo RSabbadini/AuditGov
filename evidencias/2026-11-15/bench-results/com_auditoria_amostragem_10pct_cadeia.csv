@@ -1,0 +1,3 @@
+rotulo,momento,http,valida,registros,segundos_verificacao
+com_auditoria_amostragem_10pct,antes,200,true,1,0.230027
+com_auditoria_amostragem_10pct,depois,200,true,35019,1.061026

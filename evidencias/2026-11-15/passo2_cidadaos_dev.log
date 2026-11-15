@@ -1,0 +1,57 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository maven-central (prefixes-maven-central.txt)
+[INFO] 
+[INFO] ----------------------< br.gov.auditgov:auditgov >----------------------
+[INFO] Building auditgov 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact io.quarkus:quarkus-resteasy-reactive-jackson:jar:3.15.1 has been relocated to io.quarkus:quarkus-rest-jackson:jar:3.15.1: Update the artifactId in your project build file. Refer to https://github.com/quarkusio/quarkus/wiki/Migration-Guide-3.9 for more information.
+[INFO] 
+[INFO] --- quarkus:3.15.1:dev (default-cli) @ auditgov ---
+[INFO] Invoking resources:3.5.0:resources (default-resources) @ auditgov
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] Invoking quarkus:3.15.1:generate-code (default) @ auditgov
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Invoking compiler:3.13.0:compile (default-compile) @ auditgov
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 24 source files with javac [debug parameters release 21] to target/classes
+[INFO] Invoking resources:3.5.0:testResources (default-testResources) @ auditgov
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] Invoking quarkus:3.15.1:generate-code-tests (default) @ auditgov
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Invoking compiler:3.13.0:testCompile (default-testCompile) @ auditgov
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 20 source files with javac [debug parameters release 21] to target/test-classes
+
+----------------------------
+--- Help improve Quarkus ---
+----------------------------
+* Learn more: https://quarkus.io/usage/
+* Do you agree to contribute anonymous build time data to the Quarkus community? (y/n and enter) 
+[info] [Quarkus build analytics] Didn't receive a valid user's answer: `y` or `n`. The question will be asked again next time.
+
+Listening for transport dt_socket at address: 5005
+11:09:19 INFO  traceId= spanId= [io.qu.sm.openapi] (build-28) OpenAPI JSON saved: /home/sabbadin/Documents/AuditGovV3/auditgov_v3/target/openapi/openapi.json
+11:09:19 INFO  traceId= spanId= [io.qu.sm.openapi] (build-28) OpenAPI YAML saved: /home/sabbadin/Documents/AuditGovV3/auditgov_v3/target/openapi/openapi.yaml
+__  ____  __  _____   ___  __ ____  ______ 
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/ 
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \   
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/   
+11:09:28 WARN  traceId= spanId= [or.hi.en.jd.sp.SqlExceptionHelper] (JPA Startup Thread) SQL Warning Code: 0, SQLState: 00000
+11:09:28 WARN  traceId= spanId= [or.hi.en.jd.sp.SqlExceptionHelper] (JPA Startup Thread) constraint "ukluea4jirtta5d80vfjadpjghh" of relation "audit_log" does not exist, skipping
+11:09:28 INFO  traceId= spanId= [br.go.au.se.AuditSchemaGuard] (Quarkus Main Thread) Proteção append-only instalada em audit_log (UPDATE, DELETE e TRUNCATE bloqueados por gatilho).
+11:09:28 WARN  traceId= spanId= [br.go.au.se.AuditCrypto] (Quarkus Main Thread) Usando a chave HMAC de desenvolvimento; defina AUDITGOV_HMAC_KEY fora do laboratório.
+11:09:28 INFO  traceId= spanId= [io.quarkus] (Quarkus Main Thread) auditgov 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.15.1) started in 15.623s. Listening on: http://localhost:8080
+11:09:28 INFO  traceId= spanId= [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+11:09:28 INFO  traceId= spanId= [io.quarkus] (Quarkus Main Thread) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-postgresql, narayana-jta, opentelemetry, rest, rest-jackson, security, smallrye-context-propagation, smallrye-jwt, smallrye-openapi, swagger-ui, vertx]
+11:09:38 DEBUG traceId=c7bd6c30c5dc9323f7afc46da725db0a spanId=d3f5ed67286bcec5 [br.go.au.se.AuditLogService] (executor-thread-1) Evidência de auditoria gravada: AuditLog{id=74498ae5-a1b2-4e54-914d-1fd887ac000d, seq=1, traceId='c7bd6c30c5dc9323f7afc46da725db0a', spanId='d3f5ed67286bcec5', operatorId='fiscal_maria', action='READ_CITIZEN_DATA', resource='POST /api/v1/cidadaos/consulta', subjectRef='9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c', payloadHash='a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44', timestamp=2026-11-15T14:09:37.543458Z, prevHash='0000000000000000000000000000000000000000000000000000000000000000', recordHash='6677cdf2da019b114b832c12a6fd780c22e621787ea0d4c2d0266cbb0e8e778f'}
+11:09:38 DEBUG traceId=a8c776cfcb65ca54d9424a5e633b23cf spanId=ad1f85229cd79051 [br.go.au.se.AuditLogService] (executor-thread-1) Evidência de auditoria gravada: AuditLog{id=9d99b0df-5d12-40f4-ac8e-d160636313b8, seq=2, traceId='a8c776cfcb65ca54d9424a5e633b23cf', spanId='ad1f85229cd79051', operatorId='fiscal_maria', action='READ_CITIZEN_DATA', resource='POST /api/v1/cidadaos/consulta', subjectRef='9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c', payloadHash='a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44', timestamp=2026-11-15T14:09:38.416239Z, prevHash='6677cdf2da019b114b832c12a6fd780c22e621787ea0d4c2d0266cbb0e8e778f', recordHash='1ecaae7f401c704bbf768be417a84c4969703d541b116a99a20651e7372b7b05'}
+11:09:43 DEBUG traceId=b4578b69aa7e96fbcb4eb41c7d2d6298 spanId=b3a38013a0baa459 [br.go.au.se.AuditLogService] (executor-thread-1) Evidência de auditoria gravada: AuditLog{id=1afc154b-1da0-4c84-ac8f-9ccd3c91f25d, seq=3, traceId='b4578b69aa7e96fbcb4eb41c7d2d6298', spanId='b3a38013a0baa459', operatorId='fiscal_maria', action='READ_CITIZEN_DATA', resource='POST /api/v1/cidadaos/consulta', subjectRef='9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c', payloadHash='a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44', timestamp=2026-11-15T14:09:43.287056Z, prevHash='1ecaae7f401c704bbf768be417a84c4969703d541b116a99a20651e7372b7b05', recordHash='4a94b8d36675a37683bbaa6820bc5127d15657949054bffb7bccc39107107893'}
+11:10:06 INFO  traceId= spanId= [io.quarkus] (Shutdown thread) auditgov stopped in 0.059s

@@ -1,0 +1,3 @@
+rotulo,momento,http,valida,registros,segundos_verificacao
+com_auditoria_always_on,antes,200,true,1,0.265568
+com_auditoria_always_on,depois,200,true,34233,1.158750

@@ -1,0 +1,3 @@
+rotulo,momento,http,valida,registros,segundos_verificacao
+sem_auditoria,antes,200,true,0,0.913300
+sem_auditoria,depois,200,true,0,0.030320

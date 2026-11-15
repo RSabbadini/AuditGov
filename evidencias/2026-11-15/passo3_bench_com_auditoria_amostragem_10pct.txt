@@ -1,0 +1,29 @@
+>> Emitindo 100 tokens de laboratorio (operadores bench_1 ... bench_100) e 1 token de auditor
+>> Verificacao da cadeia antes da carga
+   cadeia (antes): valida=true registros=1 verificacao em 0.230027 s (HTTP 200)
+>> Aquecimento (20s, 10 usuarios virtuais)
+>> com_auditoria_amostragem_10pct: 10 usuarios virtuais, repeticao 1/3 (60s)
+>> com_auditoria_amostragem_10pct: 10 usuarios virtuais, repeticao 2/3 (60s)
+>> com_auditoria_amostragem_10pct: 10 usuarios virtuais, repeticao 3/3 (60s)
+>> com_auditoria_amostragem_10pct: 100 usuarios virtuais, repeticao 1/3 (60s)
+>> com_auditoria_amostragem_10pct: 100 usuarios virtuais, repeticao 2/3 (60s)
+>> com_auditoria_amostragem_10pct: 100 usuarios virtuais, repeticao 3/3 (60s)
+
+>> Verificacao da cadeia depois da carga
+   cadeia (depois): valida=true registros=35019 verificacao em 1.061026 s (HTTP 200)
+   evidencias novas na cadeia: 35018; requisicoes enviadas pelo k6 (aquecimento + medicao): 35018
+   Em modo com auditoria, as duas cifras devem coincidir quando todas as respostas foram 200.
+   Se evidencias < requisicoes, houve resposta recusada (veja erro_pct) ou perda de evidencia
+   (modo lenient). Investigue antes de usar os numeros. Em sem_auditoria, evidencias novas = 0.
+
+Resultados em bench/results/com_auditoria_amostragem_10pct.csv:
+rotulo                            vus    repeticao  p50_ms       p95_ms              p99_ms              rps                erro_pct  reqs
+"com_auditoria_amostragem_10pct"  "10"   "1"        112.170977   132.97256314999998  152.46342307000012  88.81354962329716  0         5338
+"com_auditoria_amostragem_10pct"  "10"   "2"        109.748897   120.77030779999998  132.52356836        90.48837587503901  0         5439
+"com_auditoria_amostragem_10pct"  "10"   "3"        107.8017315  118.26615185        129.15412157        92.07958101466468  0         5538
+"com_auditoria_amostragem_10pct"  "100"  "1"        1088.063754  1157.8034539999999  1175.1499049        91.55557673247563  0         5591
+"com_auditoria_amostragem_10pct"  "100"  "2"        1056.382649  1118.7206026000001  1155.873123         94.4909993812897   0         5767
+"com_auditoria_amostragem_10pct"  "100"  "3"        1052.182694  1109.9720284999999  1132.7947475600001  94.6293263588202   0         5783
+
+Cadeia (antes/depois) em bench/results/com_auditoria_amostragem_10pct_cadeia.csv; ambiente em bench/results/com_auditoria_amostragem_10pct_ambiente.txt.
+Os tokens de laboratorio estao em bench/results/com_auditoria_amostragem_10pct_tokens.txt; apague-os quando terminar.

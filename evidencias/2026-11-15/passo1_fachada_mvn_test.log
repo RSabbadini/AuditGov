@@ -1,0 +1,73 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository maven-central (prefixes-maven-central.txt)
+[INFO] 
+[INFO] ------------------< br.gov.auditgov:auditgov-facade >-------------------
+[INFO] Building auditgov-facade 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ auditgov-facade ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- quarkus:3.15.1:generate-code (default) @ auditgov-facade ---
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ auditgov-facade ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- quarkus:3.15.1:generate-code-tests (default) @ auditgov-facade ---
+[INFO] Loaded 24498 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ auditgov-facade ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ auditgov-facade ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 6 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.3.1:test (default-test) @ auditgov-facade ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running br.gov.auditgov.facade.PropagacaoTest
+11:06:38 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.15.1) started in 14.067s. Listening on: http://localhost:8091
+11:06:38 INFO  traceId= spanId= [io.quarkus] (main) Profile test activated. 
+11:06:38 INFO  traceId= spanId= [io.quarkus] (main) Installed features: [cdi, opentelemetry, rest, rest-client, rest-client-jackson, rest-jackson, smallrye-context-propagation, vertx]
+11:06:46 DEBUG traceId=251c375d990156b78f4e1a29060867b6 spanId=64ee40ddb3afec88 [br.go.au.fa.FacadeResource] (executor-thread-1) Serviço de cidadãos respondeu HTTP 401; a fachada repassa só o status.
+11:06:47 DEBUG traceId=a661847284000697e7fe5375e78017d2 spanId=602f40678c24e71b [br.go.au.fa.FacadeResource] (executor-thread-1) Serviço de cidadãos respondeu HTTP 404; a fachada repassa só o status.
+11:06:47 DEBUG traceId=217c7af9b4c290ba79ca706289fd092a spanId=500f26f2e5ccbde4 [br.go.au.fa.FacadeResource] (executor-thread-1) Serviço de cidadãos respondeu HTTP 503; a fachada repassa só o status.
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 35.56 s -- in br.gov.auditgov.facade.PropagacaoTest
+[INFO] Running br.gov.auditgov.facade.PropagacaoManualTest
+11:06:48 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade stopped in 0.381s
+11:07:00 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.15.1) started in 10.857s. Listening on: http://localhost:8091
+11:07:00 INFO  traceId= spanId= [io.quarkus] (main) Profile test activated. 
+11:07:00 INFO  traceId= spanId= [io.quarkus] (main) Installed features: [cdi, opentelemetry, rest, rest-client, rest-client-jackson, rest-jackson, smallrye-context-propagation, vertx]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.69 s -- in br.gov.auditgov.facade.PropagacaoManualTest
+[INFO] Running br.gov.auditgov.facade.ServicoIndisponivelTest
+11:07:03 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade stopped in 0.164s
+11:07:13 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.15.1) started in 8.953s. Listening on: http://localhost:8091
+11:07:13 INFO  traceId= spanId= [io.quarkus] (main) Profile test activated. 
+11:07:13 INFO  traceId= spanId= [io.quarkus] (main) Installed features: [cdi, opentelemetry, rest, rest-client, rest-client-jackson, rest-jackson, smallrye-context-propagation, vertx]
+11:07:16 WARN  traceId=683d27fb72f2343985467ce5028fa59a spanId=2e597cc8bad57f40 [br.go.au.fa.FacadeResource] (executor-thread-1) Serviço de cidadãos inacessível (ProcessingException).
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.22 s -- in br.gov.auditgov.facade.ServicoIndisponivelTest
+[INFO] Running br.gov.auditgov.facade.TraceparentHeaderTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in br.gov.auditgov.facade.TraceparentHeaderTest
+11:07:16 INFO  traceId= spanId= [io.quarkus] (main) auditgov-facade stopped in 0.160s
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:38 min
+[INFO] Finished at: 2026-11-15T11:07:17-03:00
+[INFO] ------------------------------------------------------------------------

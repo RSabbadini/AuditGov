@@ -1,0 +1,78 @@
+2026-11-15 11:09:36 -0300
+[1m1. Requisição HTTP autenticada[0m
+  TraceID gerado: c7bd6c30c5dc9323f7afc46da725db0a
+  Endpoint: POST http://localhost:8080/api/v1/cidadaos/consulta (CPF no corpo da requisição)
+  Operador (claim upn do token JWT de laboratório): fiscal_maria
+
+  [32m✔[0m HTTP 200
+  {
+    "cpf": "12345678900",
+    "nome": "Joana da Silva Pereira",
+    "dataNascimento": "1988-04-12",
+    "endereco": "Rua das Acácias, 120 - Centro - Campinas/SP - 13010-000"
+  }
+
+[1m2. Requisição sem token[0m
+  [32m✔[0m sem token: HTTP 401 (o dado não é entregue)
+
+[1m3. Evidência no PostgreSQL[0m
+  [32m✔[0m Registro encontrado
+  seq:          1  (posição na cadeia de hash)
+  trace_id:     c7bd6c30c5dc9323f7afc46da725db0a
+  span_id:      d3f5ed67286bcec5
+  operator_id:  fiscal_maria  (principal do token JWT validado)
+  action:       READ_CITIZEN_DATA
+  resource:     POST /api/v1/cidadaos/consulta
+  subject_ref:  9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c
+  payload_hash: a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+  timestamp:    2026-11-15 14:09:37.543458+00
+  prev_hash:    0000000000000000000000000000000000000000000000000000000000000000
+  record_hash:  6677cdf2da019b114b832c12a6fd780c22e621787ea0d4c2d0266cbb0e8e778f
+
+  [32m✔[0m trace_id do banco bate com o traceparent enviado
+  [32m✔[0m operator_id é o do token (fiscal_maria)
+  [32m✔[0m o CPF não aparece em claro na linha gravada no banco
+  [32m✔[0m subject_ref confere com o HMAC do CPF consultado
+  [32m✔[0m a requisição recusada (401) não gerou evidência de acesso a dado
+  [32m✔[0m o cabeçalho X-User-ID foi ignorado (nenhum registro com o operador 'forjado_448885')
+
+[1m4. Jaeger[0m
+  Abra no navegador:
+  http://localhost:16686/trace/c7bd6c30c5dc9323f7afc46da725db0a
+  
+  No trace, expanda o span 'auditgov.evidence' e confira a tag audit.payload.hmac.
+  Ela deve ser idêntica ao payload_hash impresso acima:
+  
+  a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+
+  [32m✔[0m trace encontrado no Jaeger
+  [32m✔[0m o CPF não aparece no rastro do Jaeger
+
+[1m5. Verificação da cadeia de hash[0m
+  [32m✔[0m token sem o papel 'auditor': HTTP 403 (a verificação é só do auditor)
+  [32m✔[0m cadeia íntegra (HTTP 200, valida=true)
+  {
+    "valida": true,
+    "registrosVerificados": 2,
+    "ultimoSeq": 2,
+    "ultimoHash": "1ecaae7f401c704bbf768be417a84c4969703d541b116a99a20651e7372b7b05",
+    "seqComFalha": null,
+    "motivo": null,
+    "detalhe": null
+  }
+
+  A verificação INDEPENDENTE, fora da aplicação (psql + openssl), é:
+    AUDITGOV_HMAC_KEY='<chave>' ./scripts/verify-chain.sh
+  Para detectar a remoção das ÚLTIMAS linhas, guarde fora do banco o par (ultimoSeq, ultimoHash) acima
+  e passe-o depois em --ancora-seq / --ancora-hash (ou em ?ancoraSeq=&ancoraHash= no endpoint).
+
+[1m6. Proteção contra alteração no banco[0m
+  [32m✔[0m o banco rejeitou o UPDATE sobre a evidência
+  ERROR:  audit_log e append-only: operacao UPDATE bloqueada
+
+[1mResumo[0m
+  TraceID usado nesta execução: c7bd6c30c5dc9323f7afc46da725db0a
+  Rode de novo com outro CPF: ./test-audit.sh 98765432100
+  Caso de falha (auditoria de tentativa): ./test-audit.sh 00000000000
+  Dois serviços, um trace só: ./scripts/e2e-trace.sh (veja facade/README.md)
+exit=0

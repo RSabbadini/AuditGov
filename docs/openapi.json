@@ -1,0 +1,283 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "AuditGov API",
+    "description" : "API de exemplo (dados fictícios) instrumentada pela prova de conceito AuditGov, que registra cada acesso a dado de cidadão como evidência no PostgreSQL e como span OpenTelemetry (Jaeger) com o mesmo trace_id, para apoiar o registro das operações de tratamento previsto no Art. 37 da LGPD. Não garante conformidade por si só.",
+    "contact" : {
+      "name" : "Rafael Sabbadini Galego",
+      "email" : "rafaelsabbadini8@gmail.com"
+    },
+    "version" : "1.0.0"
+  },
+  "tags" : [ {
+    "name" : "Auditoria",
+    "description" : "Conferência da integridade da trilha de auditoria. Exige o papel auditor."
+  }, {
+    "name" : "Benefícios",
+    "description" : "Consulta de benefício de um titular (dados fictícios). Auditada pelo mesmo mecanismo transversal do recurso de cidadãos."
+  }, {
+    "name" : "Cidadãos",
+    "description" : "Consulta de dados cadastrais. Todo acesso é auditado de forma transversal pelo AuditGov (anotação @Auditable), sem código de auditoria explícito neste recurso."
+  } ],
+  "paths" : {
+    "/api/v1/auditoria/cadeia/verificacao" : {
+      "get" : {
+        "tags" : [ "Auditoria" ],
+        "summary" : "Verifica a cadeia de hashes de audit_log",
+        "description" : "Percorre todos os registros em ordem de seq e confere a sequência, o encadeamento (prev_hash) e o HMAC de cada registro. Aponta o primeiro registro que falha. Sem âncora, não detecta a remoção dos últimos registros nem a reescrita da cadeia por quem tem a chave HMAC: para isso, informe o par (ancoraSeq, ancoraHash) guardado fora do banco em uma verificação anterior.",
+        "parameters" : [ {
+          "name" : "ancoraHash",
+          "in" : "query",
+          "description" : "record_hash (64 hexadecimais minúsculos) ancorado para essa posição.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ancoraSeq",
+          "in" : "query",
+          "description" : "Posição (seq) do registro ancorado fora do banco.",
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A verificação foi executada. O campo 'valida' diz se a cadeia confere.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VerificacaoDaCadeia"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Âncora incompleta (informe ancoraSeq e ancoraHash juntos) ou fora do formato."
+          },
+          "401" : {
+            "description" : "Token ausente, inválido ou expirado."
+          },
+          "403" : {
+            "description" : "Token válido, mas sem o papel auditor."
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/api/v1/beneficios/consulta" : {
+      "post" : {
+        "tags" : [ "Benefícios" ],
+        "summary" : "Consulta de benefício por CPF",
+        "description" : "Retorna o benefício fictício associado ao CPF informado no corpo. Auditada pelo AuditGov com a ação READ_BENEFIT_DATA.",
+        "requestBody" : {
+          "description" : "CPF a consultar.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CpfQuery"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Benefício localizado.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BenefitDTO"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "CPF ausente ou fora do formato (11 dígitos). A tentativa é auditada."
+          },
+          "404" : {
+            "description" : "Nenhum benefício para o CPF. A tentativa também é auditada."
+          },
+          "401" : {
+            "description" : "Token ausente, inválido ou expirado. Não gera evidência de acesso a dado."
+          },
+          "503" : {
+            "description" : "Só no modo estrito: a evidência não pôde ser gravada e o dado não é entregue."
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/api/v1/cidadaos/consulta" : {
+      "post" : {
+        "tags" : [ "Cidadãos" ],
+        "summary" : "Consulta cadastral de cidadão por CPF",
+        "description" : "Retorna os dados cadastrais fictícios de um cidadão. A chamada é interceptada pelo AuditGov, que grava uma evidência no PostgreSQL (tabela somente-anexo, protegida por gatilho) e um span OpenTelemetry (Jaeger) com o mesmo trace_id. A evidência guarda o operador autenticado (principal do token JWT validado), o modelo de rota, uma referência HMAC do titular, um HMAC do conteúdo entregue e o encadeamento de hashes com o registro anterior; o CPF não é gravado em claro. Apoia o registro das operações de tratamento previsto no Art. 37 da LGPD, mas não garante conformidade por si só.",
+        "requestBody" : {
+          "description" : "CPF a consultar.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CpfQuery"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Cidadão localizado.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CitizenDTO"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "CPF ausente ou fora do formato (11 dígitos). A tentativa é auditada (action = READ_CITIZEN_DATA_FAILED)."
+          },
+          "404" : {
+            "description" : "CPF não localizado na base cadastral. A tentativa também é auditada (action = READ_CITIZEN_DATA_FAILED): o esforço de acesso, mesmo sem sucesso, é fato relevante para a trilha."
+          },
+          "401" : {
+            "description" : "Token ausente, com assinatura inválida, de outro emissor ou expirado. A requisição não chega ao método e não gera evidência de acesso a dado."
+          },
+          "503" : {
+            "description" : "Só no modo estrito (auditgov.failure-mode=strict): a evidência não pôde ser gravada e, por isso, o dado não é entregue."
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BenefitDTO" : {
+        "type" : "object",
+        "properties" : {
+          "programa" : {
+            "description" : "Nome do programa (fictício).",
+            "type" : "string",
+            "example" : "Programa Exemplo A"
+          },
+          "situacao" : {
+            "description" : "Situação do benefício.",
+            "type" : "string",
+            "example" : "ATIVO"
+          },
+          "valorMensal" : {
+            "description" : "Valor mensal em reais (fictício).",
+            "type" : "number",
+            "example" : 600.0
+          },
+          "competencia" : {
+            "description" : "Competência no formato yyyy-MM.",
+            "type" : "string",
+            "example" : "2026-10"
+          }
+        }
+      },
+      "CitizenDTO" : {
+        "type" : "object",
+        "properties" : {
+          "cpf" : {
+            "description" : "CPF do cidadão, apenas dígitos, sem máscara.",
+            "type" : "string",
+            "example" : "12345678900"
+          },
+          "nome" : {
+            "description" : "Nome completo do cidadão.",
+            "type" : "string",
+            "example" : "Joana da Silva Pereira"
+          },
+          "dataNascimento" : {
+            "description" : "Data de nascimento, formato ISO-8601 (yyyy-MM-dd).",
+            "type" : "string",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/LocalDate"
+            } ],
+            "example" : "1988-04-12"
+          },
+          "endereco" : {
+            "description" : "Endereço completo (logradouro, bairro, cidade/UF, CEP).",
+            "type" : "string",
+            "example" : "Rua das Acácias, 120 - Centro - Campinas/SP - 13010-000"
+          }
+        }
+      },
+      "CpfQuery" : {
+        "type" : "object",
+        "properties" : {
+          "cpf" : {
+            "description" : "CPF do titular, 11 dígitos (pontuação é ignorada).",
+            "type" : "string",
+            "example" : "12345678900"
+          }
+        }
+      },
+      "LocalDate" : {
+        "format" : "date",
+        "type" : "string",
+        "example" : "2022-03-10"
+      },
+      "VerificacaoDaCadeia" : {
+        "description" : "Resultado da conferência da cadeia de hashes de audit_log.",
+        "type" : "object",
+        "properties" : {
+          "valida" : {
+            "description" : "true se todos os registros conferem (sequência, encadeamento e hash).",
+            "type" : "boolean",
+            "example" : true
+          },
+          "registrosVerificados" : {
+            "format" : "int64",
+            "description" : "Quantos registros foram aprovados antes de terminar ou de falhar.",
+            "type" : "integer",
+            "example" : 128
+          },
+          "ultimoSeq" : {
+            "format" : "int64",
+            "description" : "Posição (seq) do último registro aprovado; nulo se a tabela está vazia.",
+            "type" : "integer",
+            "example" : 128
+          },
+          "ultimoHash" : {
+            "description" : "record_hash do último registro aprovado. Guarde este par (seq, hash) FORA do banco para detectar, depois, a remoção dos registros finais.",
+            "type" : "string"
+          },
+          "seqComFalha" : {
+            "format" : "int64",
+            "description" : "Posição do primeiro registro que falhou; nulo se a cadeia é válida.",
+            "type" : "integer",
+            "example" : 57
+          },
+          "motivo" : {
+            "description" : "Motivo da falha: SEQ_GAP, PREV_HASH_MISMATCH, RECORD_HASH_MISMATCH, ANCHOR_MISMATCH ou TAIL_TRUNCATED; nulo se a cadeia é válida.",
+            "type" : "string",
+            "example" : "RECORD_HASH_MISMATCH"
+          },
+          "detalhe" : {
+            "description" : "Explicação da falha; nulo se a cadeia é válida.",
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "SecurityScheme" : {
+        "type" : "http",
+        "description" : "Authentication",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}

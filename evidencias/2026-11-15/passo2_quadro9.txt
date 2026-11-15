@@ -1,0 +1,31 @@
+== audit_log (trace_id=b4578b69aa7e96fbcb4eb41c7d2d6298)
+-[ RECORD 1 ]---+-----------------------------------------------------------------
+id              | 1afc154b-1da0-4c84-ac8f-9ccd3c91f25d
+action          | READ_CITIZEN_DATA
+operator_id     | fiscal_maria
+payload_hash    | a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+prev_hash       | 1ecaae7f401c704bbf768be417a84c4969703d541b116a99a20651e7372b7b05
+record_hash     | 4a94b8d36675a37683bbaa6820bc5127d15657949054bffb7bccc39107107893
+resource        | POST /api/v1/cidadaos/consulta
+seq             | 3
+span_id         | b3a38013a0baa459
+subject_ref     | 9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c
+event_timestamp | 2026-11-15 14:09:43.287056+00
+trace_id        | b4578b69aa7e96fbcb4eb41c7d2d6298
+
+== Jaeger: tags do span auditgov.evidence
+traceID=b4578b69aa7e96fbcb4eb41c7d2d6298
+spanID=b3a38013a0baa459
+service=auditgov
+audit.action=READ_CITIZEN_DATA
+audit.payload.hmac=a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+audit.persisted=true
+audit.operator=fiscal_maria
+audit.resource=POST /api/v1/cidadaos/consulta
+audit.subject_ref=9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c
+span.kind=internal
+internal.span.format=otlp
+== Servicos no trace
+auditgov, auditgov-facade
+== CPF 12345678900 no trace (grep -c)
+0

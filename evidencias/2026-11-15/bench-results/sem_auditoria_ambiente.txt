@@ -1,0 +1,10 @@
+rotulo: sem_auditoria
+data (UTC): 2026-11-15T14:11:50Z
+so: Linux 7.2.10-arch1-1
+cpu: Intel(R) Core(TM) i3 CPU       M 350  @ 2.27GHz
+nucleos: 4
+memoria: 7917124 kB
+java (do PATH desta sessao): openjdk version "21.0.13" 2026-10-20 LTS
+k6: k6 v2.4.0 (commit/dd9395906d, go1.26.11, linux/amd64)
+postgresql: PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+parametros: DURATION=60s WARMUP=20s VUS_LIST="10 100" REPS=3 BASE_URL=http://localhost:8080

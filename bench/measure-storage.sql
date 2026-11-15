@@ -11,9 +11,10 @@
 -- mesmo titular costuma aparecer em varios eventos, e o indice fica menor). Os hashes sao
 -- sequencias hexadecimais de 64 caracteres sem estrutura, como os HMAC-SHA-256 reais.
 --
--- A ordem das colunas segue a que o Hibernate costuma gerar (chave primaria e depois ordem
--- alfabetica). Ela influencia o tamanho (alinhamento), entao confira com \d audit_log na
--- tabela criada pela aplicacao e ajuste se for diferente.
+-- A ordem das colunas e a que o Hibernate gerou para audit_log no Quarkus 3.15.1, conferida
+-- com \d audit_log em 15 nov. 2026 (event_timestamp fica depois de subject_ref, porque o
+-- Hibernate ordena pelo nome do atributo Java, "timestamp", e nao pelo nome da coluna). A
+-- ordem influencia o tamanho (alinhamento): confira de novo se a entidade mudar.
 --
 -- Uso: psql -U <usuario> -d <banco_descartavel> -f bench/measure-storage.sql
 -- Mexe apenas na tabela audit_log_medicao (nao toca em audit_log), mas ocupa
@@ -31,7 +32,6 @@ DROP TABLE IF EXISTS audit_log_medicao;
 CREATE TABLE audit_log_medicao (
     id uuid PRIMARY KEY,
     action varchar(80) NOT NULL,
-    event_timestamp timestamptz(6) NOT NULL,
     operator_id varchar(120) NOT NULL,
     payload_hash varchar(64) NOT NULL,
     prev_hash varchar(64) NOT NULL,
@@ -40,13 +40,16 @@ CREATE TABLE audit_log_medicao (
     seq bigint NOT NULL,
     span_id varchar(16) NOT NULL,
     subject_ref varchar(64),
+    event_timestamp timestamptz(6) NOT NULL,
     trace_id varchar(32) NOT NULL,
     CONSTRAINT uk_audit_medicao_seq UNIQUE (seq));
 CREATE INDEX ON audit_log_medicao (trace_id);
 CREATE INDEX ON audit_log_medicao (operator_id);
 CREATE INDEX ON audit_log_medicao (event_timestamp);
 CREATE INDEX ON audit_log_medicao (subject_ref);
-INSERT INTO audit_log_medicao
+INSERT INTO audit_log_medicao (id, action, event_timestamp, operator_id, payload_hash,
+                               prev_hash, record_hash, resource, seq, span_id,
+                               subject_ref, trace_id)
 SELECT gen_random_uuid(),
        CASE WHEN g % 10 = 0
             THEN 'READ_CITIZEN_DATA_FAILED'

@@ -1,0 +1,3 @@
+tabela 434.0 MiB, indices 297.5 MiB, total 731.7 MiB
+767 bytes por evento
+C = US$ 0.08; 12 x C = US$ 0.99

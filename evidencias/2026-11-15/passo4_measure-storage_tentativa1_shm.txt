@@ -1,0 +1,20 @@
+2026-11-15T11:34:24-03:00
+                                         version                                          
+------------------------------------------------------------------------------------------
+ PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+(1 row)
+
+NOTICE:  table "audit_log_medicao" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1000000
+ERROR:  could not resize shared memory segment "/PostgreSQL.2104810534" to 67145440 bytes: No space left on device
+ eventos | bytes_tabela | bytes_indices | bytes_total | bytes_por_evento 
+---------+--------------+---------------+-------------+------------------
+ 1000000 |    455114752 |     311549952 |   766812160 |            766.8
+(1 row)
+

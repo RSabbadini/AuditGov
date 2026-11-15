@@ -1,0 +1,21 @@
+2026-11-15T11:36:53-03:00
+PGOPTIONS=-cmax_parallel_maintenance_workers=0 (o /dev/shm de 64 MB do conteiner nao comporta o VACUUM paralelo)
+                                         version                                          
+------------------------------------------------------------------------------------------
+ PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+(1 row)
+
+DROP TABLE
+NOTICE:  table "audit_log_medicao" does not exist, skipping
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1000000
+VACUUM
+ eventos | bytes_tabela | bytes_indices | bytes_total | bytes_por_evento 
+---------+--------------+---------------+-------------+------------------
+ 1000000 |    455114752 |     311967744 |   767238144 |            767.2
+(1 row)
+

@@ -1,0 +1,29 @@
+>> Emitindo 100 tokens de laboratorio (operadores bench_1 ... bench_100) e 1 token de auditor
+>> Verificacao da cadeia antes da carga
+   cadeia (antes): valida=true registros=1 verificacao em 0.265568 s (HTTP 200)
+>> Aquecimento (20s, 10 usuarios virtuais)
+>> com_auditoria_always_on: 10 usuarios virtuais, repeticao 1/3 (60s)
+>> com_auditoria_always_on: 10 usuarios virtuais, repeticao 2/3 (60s)
+>> com_auditoria_always_on: 10 usuarios virtuais, repeticao 3/3 (60s)
+>> com_auditoria_always_on: 100 usuarios virtuais, repeticao 1/3 (60s)
+>> com_auditoria_always_on: 100 usuarios virtuais, repeticao 2/3 (60s)
+>> com_auditoria_always_on: 100 usuarios virtuais, repeticao 3/3 (60s)
+
+>> Verificacao da cadeia depois da carga
+   cadeia (depois): valida=true registros=34233 verificacao em 1.158750 s (HTTP 200)
+   evidencias novas na cadeia: 34232; requisicoes enviadas pelo k6 (aquecimento + medicao): 34232
+   Em modo com auditoria, as duas cifras devem coincidir quando todas as respostas foram 200.
+   Se evidencias < requisicoes, houve resposta recusada (veja erro_pct) ou perda de evidencia
+   (modo lenient). Investigue antes de usar os numeros. Em sem_auditoria, evidencias novas = 0.
+
+Resultados em bench/results/com_auditoria_always_on.csv:
+rotulo                     vus    repeticao  p50_ms             p95_ms              p99_ms              rps                erro_pct  reqs
+"com_auditoria_always_on"  "10"   "1"        92.63538600000001  161.8695955         225.10371239999975  96.31704597365359  0         5786
+"com_auditoria_always_on"  "10"   "2"        111.451745         124.94083059999997  140.35031258000004  89.54651457045676  0         5383
+"com_auditoria_always_on"  "10"   "3"        111.714583         123.28901305        132.08154980999998  89.03907612802266  0         5352
+"com_auditoria_always_on"  "100"  "1"        1121.83152         1179.5766616        1222.86538838       88.78710760117293  0         5423
+"com_auditoria_always_on"  "100"  "2"        1098.366078        1160.091269         1207.046171         90.856800879131    0         5551
+"com_auditoria_always_on"  "100"  "3"        1097.219009        1157.2752139        1197.82101369       91.14276319970246  0         5562
+
+Cadeia (antes/depois) em bench/results/com_auditoria_always_on_cadeia.csv; ambiente em bench/results/com_auditoria_always_on_ambiente.txt.
+Os tokens de laboratorio estao em bench/results/com_auditoria_always_on_tokens.txt; apague-os quando terminar.

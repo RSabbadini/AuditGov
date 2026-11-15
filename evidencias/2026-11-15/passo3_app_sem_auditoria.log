@@ -1,0 +1,11 @@
+__  ____  __  _____   ___  __ ____  ______ 
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/ 
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \   
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/   
+11:11:49 WARN  traceId= spanId= [or.hi.en.jd.sp.SqlExceptionHelper] (JPA Startup Thread) SQL Warning Code: 0, SQLState: 00000
+11:11:49 WARN  traceId= spanId= [or.hi.en.jd.sp.SqlExceptionHelper] (JPA Startup Thread) constraint "ukluea4jirtta5d80vfjadpjghh" of relation "audit_log" does not exist, skipping
+11:11:49 INFO  traceId= spanId= [br.go.au.se.AuditSchemaGuard] (main) Proteção append-only instalada em audit_log (UPDATE, DELETE e TRUNCATE bloqueados por gatilho).
+11:11:49 INFO  traceId= spanId= [io.quarkus] (main) auditgov 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.15.1) started in 6.802s. Listening on: http://0.0.0.0:8080
+11:11:49 INFO  traceId= spanId= [io.quarkus] (main) Profile prod activated. 
+11:11:49 INFO  traceId= spanId= [io.quarkus] (main) Installed features: [agroal, cdi, hibernate-orm, hibernate-orm-panache, jdbc-postgresql, narayana-jta, opentelemetry, rest, rest-jackson, security, smallrye-context-propagation, smallrye-jwt, smallrye-openapi, swagger-ui, vertx]
+11:18:24 INFO  traceId= spanId= [io.quarkus] (Shutdown thread) auditgov stopped in 0.892s

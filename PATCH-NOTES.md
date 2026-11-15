@@ -130,6 +130,11 @@ Fora disso (`java -jar`), defina `AUDITGOV_HMAC_KEY` com pelo menos 16 bytes, e 
 vida de um banco**: com outra chave, a verificação da cadeia acusa divergência nos registros antigos. O script
 independente lê a mesma variável: `AUDITGOV_HMAC_KEY=... ./scripts/verify-chain.sh`.
 
+**A chave do JWT.** O mesmo vale para o emissor: em `quarkus:dev` e nos testes a aplicação confia no emissor de
+laboratório (`publicKey.pem`, cujo par privado está no repositório). No `java -jar` não há valor padrão: defina
+`AUDITGOV_JWT_PUBLIC_KEY_LOCATION` e `AUDITGOV_JWT_ISSUER` (para o laboratório, `publicKey.pem` e
+`https://auditgov.local/dev-issuer`; a aplicação avisa no log que está usando o emissor de laboratório).
+
 Para o relatório, rode também:
 
 ```bash

@@ -49,8 +49,11 @@ principal do token (claim `upn`; na falta, `preferred_username`; depois, `sub`) 
 
 Nesta PoC o emissor é **simulado**: `scripts/mint-token.sh` assina com um par de chaves de laboratório
 (`src/test/resources/jwt/`, **não use fora do laboratório**) cuja chave pública a aplicação já confia
-(`src/main/resources/publicKey.pem`). Em produção, aponte `mp.jwt.verify.publickey.location` e
-`mp.jwt.verify.issuer` para o IdP real (veja `application.properties`).
+(`src/main/resources/publicKey.pem`). O par privado está no repositório de propósito, para que testes e
+scripts funcionem logo após o clone; por isso **só os modos dev e test confiam nele por padrão**. Em modo de
+produção (`java -jar`) a aplicação **não sobe** sem `AUDITGOV_JWT_PUBLIC_KEY_LOCATION` e `AUDITGOV_JWT_ISSUER`,
+que devem apontar para a chave (ou o JWKS) e o emissor do IdP real. Para usar o emissor de laboratório no jar,
+como no `bench/`, declare-o explicitamente; a aplicação sobe e avisa no log.
 
 ## O que é gravado
 
@@ -94,8 +97,8 @@ anterior e o seu próprio, calculado com uma chave (derivada de `auditgov.hmac.k
 | `auditgov.failure-mode` | `lenient` | `lenient`: se a evidência não puder ser gravada, registra ERROR no log e responde (há perda de evidência). `strict`: responde 503 e não entrega o dado. |
 | `auditgov.append-only.enabled` | `true` | Instala no PostgreSQL o gatilho que bloqueia `UPDATE`, `DELETE` e `TRUNCATE` em `audit_log`. |
 | `auditgov.hmac.key` | variável `AUDITGOV_HMAC_KEY` | Chave-mestra do HMAC (subchaves para `subject_ref`, `payload_hash` e a cadeia). Em modo de produção a aplicação **não sobe** com a chave de desenvolvimento. A chave nunca deve ficar no banco e **deve ser a mesma durante toda a vida de um banco**: com outra chave, a verificação da cadeia acusa divergência. |
-| `mp.jwt.verify.publickey.location` | `publicKey.pem` | Chave pública do emissor dos tokens (em produção, a chave ou o JWKS do IdP). |
-| `mp.jwt.verify.issuer` | `https://auditgov.local/dev-issuer` | Emissor aceito. |
+| `mp.jwt.verify.publickey.location` | dev/test: `publicKey.pem`; produção: variável `AUDITGOV_JWT_PUBLIC_KEY_LOCATION`, **sem padrão** | Chave pública do emissor dos tokens (em produção, a chave ou o JWKS do IdP). Sem a variável, o jar não sobe. |
+| `mp.jwt.verify.issuer` | dev/test: `https://auditgov.local/dev-issuer`; produção: variável `AUDITGOV_JWT_ISSUER`, **sem padrão** | Emissor aceito. |
 
 ## Testes
 

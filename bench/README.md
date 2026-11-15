@@ -42,6 +42,9 @@ não extrapole para outro banco, outro disco ou outro nível de concorrência.
 ```bash
 ./mvnw package -DskipTests
 export AUDITGOV_HMAC_KEY='uma-chave-qualquer-com-pelo-menos-16-bytes'   # obrigatória fora do modo dev
+# Emissor de LABORATÓRIO, declarado de propósito (o jar não confia nele por padrão e avisa no log):
+export AUDITGOV_JWT_PUBLIC_KEY_LOCATION=publicKey.pem
+export AUDITGOV_JWT_ISSUER=https://auditgov.local/dev-issuer
 ```
 
 Use **a mesma chave** em todas as execuções que compartilham o mesmo banco: a cadeia de hash é calculada

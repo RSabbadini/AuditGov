@@ -15,7 +15,8 @@ Aguarde `Listening on: http://localhost:8080` e confirme no log duas coisas: que
 `audit_log` e a mensagem `Proteção append-only instalada em audit_log`.
 
 > Em `quarkus:dev` a aplicação usa a chave HMAC de desenvolvimento e avisa isso no log. Fora do modo dev,
-> defina `AUDITGOV_HMAC_KEY`.
+> defina `AUDITGOV_HMAC_KEY` e também `AUDITGOV_JWT_PUBLIC_KEY_LOCATION` e `AUDITGOV_JWT_ISSUER` (sem elas o
+> jar não sobe; para o emissor de laboratório use `publicKey.pem` e `https://auditgov.local/dev-issuer`).
 
 **Token de acesso.** A API exige um token JWT. Quem o emite, em produção, é o provedor de identidade; aqui,
 o script `scripts/mint-token.sh` faz o papel dele com um par de chaves de **laboratório** (o token vale 1 hora):

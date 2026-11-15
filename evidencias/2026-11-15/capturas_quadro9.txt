@@ -1,0 +1,25 @@
+== Execucao das capturas (2026-11-15 15:30 -0300) - trace_id=86e394177c4d7a796d27e3ccf5e96253
+-[ RECORD 1 ]---+-----------------------------------------------------------------
+seq             | 3
+trace_id        | 86e394177c4d7a796d27e3ccf5e96253
+span_id         | d183a9de83ab82ac
+operator_id     | fiscal_maria
+action          | READ_CITIZEN_DATA
+resource        | POST /api/v1/cidadaos/consulta
+subject_ref     | 9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c
+payload_hash    | a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+record_hash     | e1512422e279d4843d203934d4f5a71f72fd9081765c1fe00af9d5c44573f5f0
+event_timestamp | 2026-11-15 18:30:02.211301+00
+
+== Jaeger span auditgov.evidence
+traceID=86e394177c4d7a796d27e3ccf5e96253
+spanID=d183a9de83ab82ac
+audit.operator=fiscal_maria
+audit.resource=POST /api/v1/cidadaos/consulta
+audit.subject_ref=9b5db533a5a6b78b95d51c20c68686a3c0e762df70775c6ebb90f16b162d080c
+audit.persisted=true
+audit.action=READ_CITIZEN_DATA
+audit.payload.hmac=a9fabdec8101e11c50656f1300ace3de5702f6846f3ffa0b68c3bb287a95aa44
+== Servicos
+auditgov, auditgov-facade
+== CPF no trace: 0

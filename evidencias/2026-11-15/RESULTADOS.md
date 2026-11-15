@@ -110,6 +110,14 @@ manual item a item com curl/psql **não** foi feita aqui.
 - OE02: Concluído (pelo desenho). OE03: Parcial (ConcurrencyTest passou).
 - **N = 3 objetivos específicos concluídos** (OE01, OE02, OE04).
 
+### Execução das capturas (15/11/2026, 15:17–15:30)
+
+Banco e Jaeger recriados; 91 de 91 e 17 de 17 de novo; `test-audit.sh` e `e2e-trace.sh` OK.
+O trace das capturas é **`86e394177c4d7a796d27e3ccf5e96253`** (span `d183a9de83ab82ac`, `seq` 3,
+`record_hash` e1512422…f5f0, `event_timestamp` 2026-11-15 18:30:02.211301+00); demais campos
+iguais aos da tabela acima, todos conferem; CPF no trace: 0. Se a Figura 5 mostrar este trace,
+use estes valores no Quadro 9 para que figura e quadro batam (`capturas_quadro9.txt`).
+
 ### Capturas (a fazer por você)
 
 - Figura 5: http://localhost:16686/trace/b4578b69aa7e96fbcb4eb41c7d2d6298 (o Jaeger guarda o trace

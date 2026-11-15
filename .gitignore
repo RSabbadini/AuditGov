@@ -18,3 +18,12 @@ target/
 
 # Resultados de medicao (gerados localmente)
 bench/results/
+
+# Vindos do .gitignore do TG I (os que nao escondem arquivos da v3)
+*.ctxt
+.mtj.tmp/
+*.war
+*.nar
+*.ear
+hs_err_pid*
+replay_pid*

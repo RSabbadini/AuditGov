@@ -196,3 +196,15 @@ mvn -N io.quarkus:quarkus-maven-plugin:3.15.1:create -Dwrapper
 ```
 
 ou, tendo o Maven instalado localmente, basta substituir `./mvnw` por `mvn` em todos os comandos.
+
+## Documentos do TG I
+
+A fase anterior do projeto (TG I) continua neste repositório:
+
+- `TG I - AuditGov - Rafael Sabbadini Galego (Versão Final ABNT).docx`
+- `Engenharia de Requisitos -  AuditGov.docx`
+- `Banner-Rafael-Versao-Final.pptx`
+- `Diagrama de Atividades - AuditGov.png`, `Diagrama de Sequência - AuditGov.png`,
+  `Diagrama de classes - AuditGov.png`
+
+O README original do TG I (problema, proposta e metodologia) está no histórico do git, no commit `afbddc5`.

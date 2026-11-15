@@ -1,0 +1,20 @@
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Quarkus
+.quarkus/
+
+# OS
+.DS_Store
+
+# Resultados de medicao (gerados localmente)
+bench/results/
